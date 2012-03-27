@@ -3,6 +3,7 @@ import pprint
 import redis
 from errors import Error
 import logging
+from datetime import datetime
 logging.basicConfig()
 log = logging.getLogger()
 log.setLevel(logging.DEBUG)
@@ -50,6 +51,9 @@ class Engine(object):
             
     def insert(self, params):
         tablename, attnames, attvalues = params
+        #Append timestamp
+        attnames.append("timestamp")
+        attvalues.append(datetime.now())
         #tablename = tablename.lower()
         #attnames = [attname.lower() for attname in attnames]
         if not len(attnames) == len(attvalues):
